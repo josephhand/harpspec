@@ -1,0 +1,11 @@
+# Metadata
+.ipynb_checkpoints
+__pycache__
+
+# Deprecated code
+/src/deprecated
+
+# Data and Data Products
+/data
+/figures
+
