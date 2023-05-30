@@ -5,3 +5,6 @@ harpspec.egg-info
 
 # Deprecated code
 /notebooks/deprecated
+
+# Build Destinations
+/build
