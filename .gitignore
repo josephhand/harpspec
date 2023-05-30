@@ -3,9 +3,5 @@
 __pycache__
 
 # Deprecated code
-/src/deprecated
-
-# Data and Data Products
-/data
-/figures
+/notebooks/deprecated
 
