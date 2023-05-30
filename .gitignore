@@ -1,7 +1,7 @@
 # Metadata
 .ipynb_checkpoints
 __pycache__
+harpspec.egg-info
 
 # Deprecated code
 /notebooks/deprecated
-

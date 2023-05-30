@@ -18,7 +18,9 @@ classifiers = [
 ]
 dependencies = [
     "astropy",
+    "matplotlib"
     "numpy",
+    "scipy",
     "TheCannon",
     "tqdm"
 ]
