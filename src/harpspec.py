@@ -27,12 +27,15 @@ class HARPSpecDataset:
         self.label_names = label_names
         
     def has_labels(self):
+        """Return whether this dataset is labelled."""
         return not self.labels is None
     
     def has_label_names(self):
+        """Return whether this dataset has assigned label names."""
         return not self.label_names is None
     
     def has_unified_wavelengths(self):
+        """Return whether this dataset has a unified wavelength array."""
         return not hasattr(self.wl[0], "__len__")
 
 def _load_spectrum(file):
@@ -52,6 +55,11 @@ def _load_spectrum(file):
     return (target, wl, flux, ivar)
 
 def collate(target):
+    """Load all .fits files in target and combine them into a dataset.
+
+    The target can wither be the path of single .fits file, or to a directory
+    containing multiple .fits files.
+    """
     
     if not os.path.exists(target):
         raise RuntimeError("Target '%s' does not exist." %target)
@@ -74,14 +82,15 @@ def collate(target):
     return HARPSpecDataset(targets, wl, flux, ivar, None, None)
 
 def load_labels(file):
-    
+    """Load all labels and targets from a csv file."""
     label_data = ascii.read(file)
     headers = label_data.colnames
     labels = np.array([ label_data[header] for header in headers ]).T
     return labels, headers
 
 def match(dataset, labels):
-    
+    """Match the targets in the dataset to the labels."""
+
     spectra_targets = dataset.targets
     label_targets = labels[:,0]
     twl = np.nonzero(
@@ -170,7 +179,8 @@ def _downsample_spectrum(flux, ivar, amount):
 
 
 def process(dataset, params):
-    
+    """Process the spectra according to the spectral processing pipeline."""
+
     targets = dataset.targets
     wl = dataset.wl
     flux = dataset.flux
@@ -231,7 +241,8 @@ def process(dataset, params):
     return HARPSpecDataset(targets, wl, flux, ivar, labels, label_names)
 
 def train(dataset):
-    
+    """Train a Cannon model using the spectra in the dataset."""
+
     ds = CannonDataset.Dataset(
         dataset.wl,
         None, dataset.flux, dataset.ivar, dataset.labels,
@@ -244,6 +255,7 @@ def train(dataset):
     return md
 
 def infer(dataset, md):
+    """Infer the labels of the spectra in the dataset using the model."""
     
     label_names = dataset.label_names
     

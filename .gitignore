@@ -8,3 +8,4 @@ harpspec.egg-info
 
 # Build Destinations
 /build
+/doc/build
